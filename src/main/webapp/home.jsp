@@ -36,11 +36,11 @@
 				</div>
 				<div class="col-md-3 d-flex align-items-center">
 					<img src="./images/<%=result.getString("filename1")%>" style="width:50%">
-					<p class="text-center m-0 w-100"><%=result.getString("memo1")%></p>
+					<p class="text-center m-0 w-100 pl-2"><%=result.getString("memo1")%></p>
 				</div>
 				<div class="col-md-3 d-flex align-items-center">
 					<img src="./images/<%=result.getString("filename2")%>" style="width:50%">
-					<p class="text-center m-0 w-100"><%=result.getString("memo2")%></p>
+					<p class="text-center m-0 w-100 pl-2"><%=result.getString("memo2")%></p>
 				</div>
 				<div class="col-md-2 d-flex justify-content-end">
 					<a href="./routine.jsp?id=<%=result.getString("id")%>" class="btn btn-secondary" style="height:40px" role="button">상세 정보 &raquo;</a>

@@ -18,7 +18,7 @@
 		PreparedStatement pstmt = null;
 		ResultSet result = null;
 		
-		String sql = "select * from routine where id = ?";
+		String sql = "select * from routine join exercise on routine.exercise_id = exercise.id where routine.id = ?";
 		pstmt = connection.prepareStatement(sql);
 		pstmt.setString(1, routineId);
 		result = pstmt.executeQuery();
@@ -36,9 +36,26 @@
 						</div>
 					</div>
 					<div class="form-group row">
-						<label class="col-sm-2">운동 ID *</label>
+						<label class="col-sm-2">운동 *</label>
 						<div class="col-sm-6">
-							<input type="text" id="exerciseId" name="exerciseId" class="form-control" value='<%=result.getString("exercise_Id")%>' >
+							<select name="exerciseId" class="mb-2">
+								<%
+									Statement stat = null;
+									ResultSet exercise = null;
+									String sql2 = "select * from exercise";
+									
+									stat = connection.createStatement();
+									exercise = stat.executeQuery(sql2);
+									while(exercise.next()) {
+								%>
+								<option value="<%=exercise.getString("id")%>"><%=exercise.getString("name")%></option>
+								<%
+									}	
+									exercise.close();
+									stat.close();
+								%>	
+							</select>
+							<p>* 수정 전 : <%=result.getString("name")%></p>
 						</div>
 					</div>
 					<hr/>
@@ -66,6 +83,17 @@
 							<input type="text" id="seconds" name="seconds" class="form-control" value='<%=result.getInt("seconds")%>' >
 						</div>
 						<label class="col-sm-2">초</label>
+					</div>
+					<div class="row w-100">
+						<div class="col-sm-2"></div>
+						<p>* 운동에 따라 횟수 또는 시간을 입력하세요.</p>
+					</div>
+					<div class="row">
+						<div class="col-sm-2">예시)</div>
+						<p>
+							<b>15회 3세트 / 0분 0초</b> 또는<br/>
+							<b>0회 0세트 / 1분 30초</b>
+						</p>
 					</div>
 				</div>
 				<div class="col-md-6">

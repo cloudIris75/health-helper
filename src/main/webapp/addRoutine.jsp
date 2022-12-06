@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,9 +23,27 @@
 						</div>
 					</div>
 					<div class="form-group row">
-						<label class="col-sm-2">운동 ID *</label>
+						<label class="col-sm-2">운동 *</label>
 						<div class="col-sm-6">
-							<input type="text" name="exerciseId" class="form-control" >
+							<select name="exerciseId">
+								<%@ include file="connectDB.jsp" %>
+								<%
+									Statement stat = null;
+									ResultSet result = null;
+									String sql = "select * from exercise";
+									
+									stat = connection.createStatement();
+									result = stat.executeQuery(sql);
+									while(result.next()) {
+								%>
+								<option value="<%=result.getString("id")%>"><%=result.getString("name")%></option>
+								<%
+									}	
+									result.close();
+									stat.close();
+									connection.close();
+								%>	
+							</select>
 						</div>
 					</div>
 					<hr/>
@@ -52,6 +71,17 @@
 							<input type="text" name="seconds" class="form-control" >
 						</div>
 						<label class="col-sm-2">초</label>
+					</div>
+					<div class="row w-100">
+						<div class="col-sm-2"></div>
+						<p>* 운동에 따라 횟수 또는 시간을 입력하세요.</p>
+					</div>
+					<div class="row">
+						<div class="col-sm-2">예시)</div>
+						<p>
+							<b>15회 3세트 / 0분 0초</b> 또는<br/>
+							<b>0회 0세트 / 1분 30초</b>
+						</p>
 					</div>
 				</div>
 				<div class="col-md-6">
